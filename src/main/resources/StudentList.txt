@@ -1,0 +1,51 @@
+STUDENT: Ivanov Ivan
+CURRICULUM: Java Developer
+START_DATE: 1 June 2020 - Monday
+COURSE                		DURATION (hrs)
+--------------------------------------------
+1. Java.                		16        
+2. JDBC.                		24        
+3. Spring.                		16
+
+STUDENT: Ivanov Ivan
+CURRICULUM: Java Developer
+START_DATE: 1 Feb 2021 - Monday
+COURSE                		DURATION (hrs)
+--------------------------------------------
+1. Java.                		16        
+2. JDBC.                		24        
+3. Spring.                		16
+
+STUDENT: Sidorov Ivan
+CURRICULUM: AQE
+START_DATE: 1 Feb 2021 - Monday
+COURSE               		DURATION (hrs)
+--------------------------------------------
+1. Test design.                		10
+2. Page Object.                		16                
+3. Selenium.                		16
+
+STUDENT: Sidorov Ivan
+CURRICULUM: AQE
+START_DATE: 31 July 2020 - Friday
+COURSE               		DURATION (hrs)
+--------------------------------------------
+1. Test design.                		10
+2. Page Object.                		16
+
+STUDENT: Sidorov Ivan
+CURRICULUM: AQE
+START_DATE: 1 June 2020 - Monday
+COURSE               		DURATION (hrs)
+--------------------------------------------
+1. Test design.                		10
+2. Page Object.                		16                
+3. Selenium.                		16
+
+STUDENT: Ivanov Ivan
+CURRICULUM: Java Developer
+START_DATE: 4 Feb 2021 - Thursday
+COURSE                		DURATION (hrs)
+--------------------------------------------
+1. Java.                		16    
+
