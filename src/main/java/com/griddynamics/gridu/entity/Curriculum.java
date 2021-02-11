@@ -1,10 +1,12 @@
+package com.griddynamics.gridu.entity;
+
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.List;
 
-class Curriculum {
+public class Curriculum {
     @Getter
     @Setter
     @NonNull
@@ -15,7 +17,7 @@ class Curriculum {
     @NonNull
     private List<Course> courses;
 
-    int getTotalTime() {
+    public int getTotalTime() {
         int time = 0;
         for (Course c : courses) {
             time += c.courseDuration;

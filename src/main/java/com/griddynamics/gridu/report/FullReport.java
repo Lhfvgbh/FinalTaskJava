@@ -1,5 +1,11 @@
+package com.griddynamics.gridu.report;
+
+import com.griddynamics.gridu.models.InputRecord;
+import com.griddynamics.gridu.models.TimeStamp;
+import com.griddynamics.gridu.entity.Course;
+
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,18 +21,25 @@ import java.util.List;
  * how much time has passed / remains until completion.
  */
 
-class FullReport extends Report {
+public class FullReport extends Report {
+
+    public FullReport(String date) throws ParseException{
+        super(date);
+    }
+
+    public FullReport(Date date) {
+        super(date);
+    }
 
     @Override
-    void generateReport() {
-        try {
+    public void generateReport() throws ParseException {
             StringBuilder output = new StringBuilder("Full information (Generating report date - ")
                     .append(getCurrentTime())
                     .append(") :\n");
 
-            List<InputRecords> records = readData();
+            List<InputRecord> records = readData();
 
-            for (InputRecords record : records) {
+            for (InputRecord record : records) {
                 output.append("\nSTUDENT: ").append(record.getStudent().getName())
                         .append("\nWORKING HOURS: 10:00-18:00")
                         .append("\nCURRICULUM NAME: ").append(record.getCurriculum().getName())
@@ -42,9 +55,9 @@ class FullReport extends Report {
                 }
 
                 output.append("\nSTART DATE: ")
-                        .append(new SimpleDateFormat("d MMMM yyyy - EEEE").format(record.getStartDate()))
+                        .append(TimeStamp.OUTPUT_DATE_FORMAT.getDateString(record.getStartDate()))
                         .append("\nEND DATE: ")
-                        .append(new SimpleDateFormat("d MMMM yyyy - EEEE").format(record.getEndDate()))
+                        .append(record.getEndDate())
                         .append("\nSTATUS: ")
                         .append(record.getStatus())
                         .append("\n--------------------------------------------");
@@ -52,8 +65,5 @@ class FullReport extends Report {
                 report.add(output.toString());
                 output.setLength(0);
             }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 }

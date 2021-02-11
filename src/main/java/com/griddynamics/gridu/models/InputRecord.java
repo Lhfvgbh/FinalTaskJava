@@ -1,7 +1,12 @@
+package com.griddynamics.gridu.models;
+
+import com.griddynamics.gridu.models.TimeStamp;
+import com.griddynamics.gridu.entity.Course;
+import com.griddynamics.gridu.entity.Curriculum;
+import com.griddynamics.gridu.entity.Student;
 import lombok.Getter;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,26 +23,29 @@ import java.util.List;
  * 3. Selenium.                     16
  */
 
-class InputRecords {
+public class InputRecord {
     @Getter
     Student student;
     @Getter
+    Curriculum curriculum;
+    @Getter
     Date startDate;
     @Getter
-    Date endDate;
-    @Getter
-    Curriculum curriculum;
+    String endDate;
     @Getter
     String status;
 
-    InputRecords(String record) throws ParseException {
+    private Date date;
+
+    public InputRecord(String record, String currentTime) throws ParseException {
         curriculum = new Curriculum();
         String[] data = record.split("\n");
         for (int i = 0; i < data.length; i++) {
             if (data[i].contains("STUDENT: ")) {
                 this.student = new Student(data[i].replace("STUDENT: ", ""));
             } else if (data[i].contains("START_DATE: ")) {
-                this.startDate = new SimpleDateFormat("d MMMM yyyy - EEEE").parse(data[i].replace("START_DATE: ", ""));
+                //this.startDate = new SimpleDateFormat(Constants.OUTPUT_DATE_FORMAT).parse(data[i].replace("START_DATE: ", ""));
+                this.startDate = TimeStamp.OUTPUT_DATE_FORMAT.getDate(data[i].replace("START_DATE: ", ""));
             } else if (data[i].contains("CURRICULUM: ")) {
                 this.curriculum.setName(data[i].replace("CURRICULUM: ", ""));
             } else if (data[i].contains("--------------------------------------------")) {
@@ -51,15 +59,15 @@ class InputRecords {
                 break;
             }
         }
-        setEndDate(startDate, curriculum.getTotalTime());
-        setStatus(endDate);
+        this.endDate = calculateEndDate(this.curriculum.getTotalTime());
+        this.status = calculateStatus(currentTime);
     }
 
-    private void setEndDate(Date startDate, int duration) {
+    private String calculateEndDate(int duration) {
         int durationDays = (int) Math.ceil(duration / 8.0);
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(startDate);
+        calendar.setTime(this.startDate);
 
         for (int i = 1; i < durationDays; i++) {
             calendar.add(Calendar.DATE, 1);
@@ -69,21 +77,25 @@ class InputRecords {
         }
 
         calendar.add(Calendar.HOUR, 18);
-        this.endDate = calendar.getTime();
+        this.date = calendar.getTime();
+        return TimeStamp.OUTPUT_DATE_FORMAT.getDateString(this.date);
     }
 
-    private void setStatus(Date endDate) {
-        long endTimeInMills = endDate.getTime();
-        long currentTimeInMills = new Date().getTime();
+    private String calculateStatus(String currentTime) throws ParseException {
+        long endTimeInMills = this.date.getTime();
+        long currentTimeInMills = (TimeStamp.INPUT_DATE_TIME_FORMAT.getDate(currentTime)).getTime();
 
         int hoursTotal = Math.abs((int) ((endTimeInMills - currentTimeInMills) / 1000 / 60 / 60));
         int days = hoursTotal / 24;
         int hours = hoursTotal - days * 24;
 
+        String status;
         if (currentTimeInMills < endTimeInMills) {
-            this.status = String.format("Training is not finished. %d d %d h hours are left until the end.", days, hours);
+            status = String.format("Training is not finished. %d d %d h hours are left until the end.", days, hours);
         } else {
-            this.status = String.format("Training completed. %s d %s h hours have passed since the end.", days, hours);
+            status = String.format("Training completed. %s d %s h hours have passed since the end.", days, hours);
         }
+        return status;
     }
+
 }

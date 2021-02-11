@@ -1,10 +1,11 @@
+package com.griddynamics.gridu.entity;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-class Course {
+public class Student {
     @Getter
-    String courseName;
-    @Getter
-    int courseDuration;
+    private String name;
+
 }

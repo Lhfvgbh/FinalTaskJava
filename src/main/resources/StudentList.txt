@@ -9,7 +9,7 @@ COURSE                		DURATION (hrs)
 
 STUDENT: Ivanov Ivan
 CURRICULUM: Java Developer
-START_DATE: 1 Feb 2021 - Monday
+START_DATE: 8 Feb 2021 - Monday
 COURSE                		DURATION (hrs)
 --------------------------------------------
 1. Java.                		16        
@@ -18,7 +18,7 @@ COURSE                		DURATION (hrs)
 
 STUDENT: Sidorov Ivan
 CURRICULUM: AQE
-START_DATE: 1 Feb 2021 - Monday
+START_DATE: 8 Feb 2021 - Monday
 COURSE               		DURATION (hrs)
 --------------------------------------------
 1. Test design.                		10

@@ -1,3 +1,11 @@
+package com.griddynamics.gridu;
+
+import com.griddynamics.gridu.report.FullReport;
+import com.griddynamics.gridu.report.Report;
+import com.griddynamics.gridu.report.ShortReport;
+
+import java.text.ParseException;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -60,20 +68,27 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Report report;
+        Scanner scanner = new Scanner(System.in);
 
         System.out.println("Type no parameter or parameter 0 for short report or else for full one:");
-
-        Scanner scanner = new Scanner(System.in);
         String type = scanner.nextLine();
 
-        if (type.equals(" ") || type.equals("0") || type.equals("")) {
-            report = new ShortReport();
-        } else {
-            report = new FullReport();
-        }
+        System.out.println("Enter data for a report in format \"d MMMM yyyy HH:mm\" or leave empty for current date:");
+        String date = scanner.nextLine();
 
-        report.generateReport();
-        report.printReport();
+        try {
+            Report report;
+
+            if (type.equals(" ") || type.equals("0") || type.equals("")) {
+                report = date.equals("") ? new ShortReport(new Date()) : new ShortReport(date);
+            } else {
+                report = date.equals("") ? new FullReport(new Date()) : new FullReport(date);
+            }
+
+            report.generateReport();
+            report.printReport();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }
